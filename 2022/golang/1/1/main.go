@@ -1,38 +1,38 @@
 package main
 
 import (
-	"io/ioutil"
+	"bufio"
 	"log"
+	"os"
 	"strconv"
-	"strings"
 )
 
 func main() {
-	input, err := ioutil.ReadFile("input.txt")
+	input, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	inputString := string(input)
-
-	lines := strings.Split(inputString, "\n")
+	defer input.Close()
+	sc := bufio.NewScanner(input)
 
 	sum := 0
 	biggest := 0
 
-	for _, line := range lines {
-		if line == "" {
+	for sc.Scan() {
+		num, err := strconv.Atoi(sc.Text())
+		if err != nil {
 			sum = 0
 			continue
 		}
 
-		num, _ := strconv.Atoi(line)
 		sum += num
 
 		if sum > biggest {
-			biggestGroup = sum
+			biggest = sum
 		}
 	}
 
 	log.Println(biggest)
 }
+

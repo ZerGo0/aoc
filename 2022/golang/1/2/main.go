@@ -1,25 +1,26 @@
 package main
 
 import (
-	"io/ioutil"
+	"bufio"
 	"log"
+	"os"
 	"strconv"
-	"strings"
 )
 
 func main() {
-	input, err := ioutil.ReadFile("input.txt")
+	input, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	inputString := string(input)
-	lines := strings.Split(inputString, "\n")
+	defer input.Close()
+	sc := bufio.NewScanner(input)
 
 	sum := 0
 	topThree := []int{0, 0, 0}
-	for _, line := range lines {
-		if len(line) == 0 {
+	for sc.Scan() {
+		num, err := strconv.Atoi(sc.Text())
+		if err != nil {
 			if sum > topThree[2] {
 				// sum is greater than the smallest of the top three
 				// now we need to find the right place to insert it
@@ -39,7 +40,6 @@ func main() {
 			continue
 		}
 
-		num, _ := strconv.Atoi(line)
 		sum += num
 	}
 
