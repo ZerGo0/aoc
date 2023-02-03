@@ -233,14 +233,14 @@ func convertPrompts(prompts []string) string {
 }
 
 func writePrompts(dayDir string, promptText string) {
-	promptFile, err := os.Create(fmt.Sprintf("%s/prompt.md", dayDir))
+	readmeFile, err := os.Create(fmt.Sprintf("%s/README.md", dayDir))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer promptFile.Close()
+	defer readmeFile.Close()
 
-	_, err = promptFile.WriteString(promptText)
+	_, err = readmeFile.WriteString(promptText)
 	if err != nil {
 		log.Fatal(err)
 	}
