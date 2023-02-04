@@ -26,7 +26,7 @@ func main() {
 	flag.StringVar(&lang, "l", "golang", "Language")
 	flag.IntVar(&year, "y", 2022, "Year")
 	flag.IntVar(&day, "d", 1, "Day")
-	flag.BoolVar(&promptOnly, "p", false, "Only get the prompt")
+	flag.BoolVar(&promptOnly, "po", false, "Only get the prompt")
 	flag.Parse()
 
 	// Check that all the flags are set
@@ -45,7 +45,7 @@ func main() {
 
 	// If we only want the prompt, we can skip the rest
 	if promptOnly {
-		parsePrompt(rootDir, aoctoken, year, day)
+		parsePrompt(dayDir, aoctoken, year, day)
 		return
 	}
 

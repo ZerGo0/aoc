@@ -28,7 +28,7 @@ get-prompt: ## Usage: make get-prompt l=golang y=2022 d=1
 		exit 1; \
 	fi
 
-	@cd $(y)/$(l)/day$(d) && go run main.go -po 1
+	@cd scripts/createDays && go run main.go -l $(l) -y $(y) -d $(d) -po 1
 
 test: ## TODO
 	@echo "TODO"
