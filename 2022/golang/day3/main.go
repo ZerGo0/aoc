@@ -45,26 +45,24 @@ func part1() {
 
 		// TODO: Is there a better way to do this?
 		// The int feels kind of useless, but the key lookup is faster than
-		// iterating over a array
-		seen := [2](map[byte]int){}
-		seen[0] = make(map[byte]int)
-		seen[1] = make(map[byte]int)
+		// iterating over a slice
+		seen := initSeen(2)
 
 		// TODO: ^
-		commonItems := make(map[byte]int)
+		commonItems := make(map[byte]bool)
 		for i := 0; i < len(items[0]); i++ {
-			seen[0][items[0][i]]++
-			seen[1][items[1][i]]++
+			seen[0][items[0][i]] = true
+			seen[1][items[1][i]] = true
 
-			if seen[0][items[1][i]] > 0 {
-				if commonItems[items[1][i]] == 0 {
-					commonItems[items[1][i]]++
+			if seen[0][items[1][i]] {
+				if !commonItems[items[1][i]] {
+					commonItems[items[1][i]] = true
 				}
 			}
 
-			if seen[1][items[0][i]] > 0 {
-				if commonItems[items[0][i]] == 0 {
-					commonItems[items[0][i]]++
+			if seen[1][items[0][i]] {
+				if !commonItems[items[0][i]] {
+					commonItems[items[0][i]] = true
 				}
 			}
 		}
@@ -106,7 +104,7 @@ func part2() {
 		}
 
 		seen := initSeen(3)
-		commonItems := make(map[byte]int)
+		commonItems := make(map[byte]bool)
 
 		itemLengths := make([]int, len(groupItems))
 		longestItem := lItem{}
@@ -123,25 +121,25 @@ func part2() {
 		for i := 0; i < longestItem.length; i++ {
 			for j := 0; j < len(groupItems); j++ {
 				if i < itemLengths[j] {
-					seen[j][groupItems[j][i]]++
+					seen[j][groupItems[j][i]] = true
 
 					// If we've already seen this item, skip it
-					if commonItems[groupItems[j][i]] > 0 {
+					if commonItems[groupItems[j][i]] {
 						continue
 					}
 
 					// Check if we've seen this item in the other items
 					seenInOthers := []int{}
 					for k := 0; k < len(groupItems); k++ {
-						if k != j && seen[k][groupItems[j][i]] > 0 {
+						if k != j && seen[k][groupItems[j][i]] {
 							seenInOthers = append(seenInOthers, k)
 						}
 					}
 
 					// If we've seen this item in all other items, add it to the common items
 					if len(seenInOthers) == 2 {
-						if commonItems[groupItems[j][i]] == 0 {
-							commonItems[groupItems[j][i]]++
+						if !commonItems[groupItems[j][i]] {
+							commonItems[groupItems[j][i]] = true
 						}
 					}
 				}
@@ -168,10 +166,10 @@ type lItem struct {
 	length int
 }
 
-func initSeen(amount int) [](map[byte]int) {
-	seen := make([](map[byte]int), amount)
+func initSeen(amount int) [](map[byte]bool) {
+	seen := make([](map[byte]bool), amount)
 	for i := 0; i < amount; i++ {
-		seen[i] = make(map[byte]int)
+		seen[i] = make(map[byte]bool)
 	}
 
 	return seen
