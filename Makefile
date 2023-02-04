@@ -22,5 +22,13 @@ run: ## Usage: make run l=golang y=2022 d=1 p=1
 
 	@cd $(y)/$(l)/day$(d) && go run main.go -p $(p)
 
+get-prompt: ## Usage: make get-prompt l=golang y=2022 d=1
+	@if [ -z "$(l)" -o -z "$(y)" -o -z "$(d)" ]; then \
+		echo "Missing required variables"; \
+		exit 1; \
+	fi
+
+	@cd $(y)/$(l)/day$(d) && go run main.go -po 1
+
 test: ## TODO
 	@echo "TODO"

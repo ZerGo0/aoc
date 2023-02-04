@@ -22,9 +22,11 @@ func main() {
 	var lang string
 	var year int
 	var day int
+	var promptOnly bool
 	flag.StringVar(&lang, "l", "golang", "Language")
 	flag.IntVar(&year, "y", 2022, "Year")
 	flag.IntVar(&day, "d", 1, "Day")
+	flag.BoolVar(&promptOnly, "p", false, "Only get the prompt")
 	flag.Parse()
 
 	// Check that all the flags are set
@@ -39,6 +41,14 @@ func main() {
 	}
 
 	rootDir := getRelativeRoot()
+	dayDir := fmt.Sprintf(rootDir+"%d/%s/day%d", year, lang, day)
+
+	// If we only want the prompt, we can skip the rest
+	if promptOnly {
+		parsePrompt(rootDir, aoctoken, year, day)
+		return
+	}
+
 	scriptDir := rootDir + "scripts/createDays/"
 
 	// First we should if we have a template for the language
@@ -47,7 +57,6 @@ func main() {
 		log.Fatal("No template for language: " + lang)
 	}
 
-	dayDir := fmt.Sprintf(rootDir+"%d/%s/day%d", year, lang, day)
 	if _, err := os.Stat(dayDir); !os.IsNotExist(err) {
 		log.Fatal("Directory already exists")
 	}
@@ -62,7 +71,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	replaceModFile(dayDir, year, lang, day)
+	// language specific stuff
+	switch lang {
+	case "golang":
+		replaceModFile(dayDir, year, lang, day)
+	}
 
 	getDayInput(dayDir, aoctoken, year, day)
 
