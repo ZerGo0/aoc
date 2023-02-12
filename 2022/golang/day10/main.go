@@ -94,7 +94,6 @@ func part2() {
 
 	regX := 1
 	cycle := 0
-	//p:
 	for sc.Scan() {
 		line := sc.Text()
 
@@ -115,9 +114,6 @@ func part2() {
 			if len(lines[currentRow]) == crtWidth {
 				currentRow++
 				lines = append(lines, "")
-				if len(lines) > 3 {
-					//break p
-				}
 			}
 
 			currentPos := cycle%crtWidth - 1  // We start at 0
