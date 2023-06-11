@@ -20,7 +20,19 @@ run: ## Usage: make run l=golang y=2022 d=1 p=1
 		exit 1; \
 	fi
 
-	@cd $(y)/$(l)/day$(d) && go run main.go -p $(p)
+	@if [ "$(l)" = "golang" ]; then \
+		cd $(y)/$(l)/day$(d) && go run main.go -p $(p); \
+		exit 0; \
+	fi
+
+	@if [ "$(l)" = "rust" ]; then \
+		cd $(y)/$(l)/day$(d) && cargo run -- $(p); \
+		exit 0; \
+	else \
+		echo "Language not supported"; \
+		exit 1; \
+	fi
+
 
 get-prompt: ## Usage: make get-prompt l=golang y=2022 d=1
 	@if [ -z "$(l)" -o -z "$(y)" -o -z "$(d)" ]; then \
