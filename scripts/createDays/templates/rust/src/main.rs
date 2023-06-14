@@ -26,11 +26,12 @@ fn part_two(test_input: Option<&str>) -> usize {
     return output;
 }
 
+#[allow(dead_code)]
+const TEST_INPUT: &str = "";
+
 #[test]
 fn test_part_one() {
-    let test_input = "";
-
-    let out = part_one(Some(test_input));
+    let out = part_one(Some(TEST_INPUT));
 
     assert_eq!(out, 0);
     println!("test_part_one: {}", out);
@@ -38,11 +39,8 @@ fn test_part_one() {
 
 #[test]
 fn test_part_two() {
-    let test_input = "";
-
-    let out = part_two(Some(test_input));
+    let out = part_two(Some(TEST_INPUT));
 
     assert_eq!(out, 0);
     println!("test_part_two: {}", out)
 }
-
