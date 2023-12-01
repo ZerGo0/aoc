@@ -40,6 +40,7 @@ func part1() {
 		firstDigit := 0
 		lastDigit := 0
 		// find the first number in the current line
+	first:
 		for i := 0; i < len(line); i++ {
 			x := line[i]
 
@@ -47,9 +48,18 @@ func part1() {
 				if firstDigit == 0 {
 					firstDigit = int(x - '0')
 					lastDigit = firstDigit
-				} else {
-					lastDigit = int(x - '0')
+					break first
 				}
+			}
+		}
+
+	last:
+		for i := len(line) - 1; i >= 0; i-- {
+			x := line[i]
+
+			if x >= '0' && x <= '9' {
+				lastDigit = int(x - '0')
+				break last
 			}
 		}
 
