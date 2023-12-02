@@ -37,9 +37,12 @@ fn test_part_one() {
     println!("test_part_one: {}", out);
 }
 
+#[allow(dead_code)]
+const TEST_INPUT2: &str = "";
+
 #[test]
 fn test_part_two() {
-    let out = part_two(Some(TEST_INPUT));
+    let out = part_two(Some(TEST_INPUT2));
 
     assert_eq!(out, 0);
     println!("test_part_two: {}", out)
